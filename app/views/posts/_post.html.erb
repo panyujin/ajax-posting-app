@@ -1,0 +1,34 @@
+<div id="post-<%= post.id %>" class="panel panel-default">
+  <div class="panel-heading">
+    <%= post.user.display_name %>
+  </div>
+  <div class="panel-body">
+    <span id="post-thumbsup-<%= post.id %>" class="label label-success"><%= post.likes.count %> 👍</span>
+    <span id="post-collect-<%= post.id %>" class="label label-success"><%= post.collections.count %> ❤️</span>
+    <%= post.content %>
+
+        <div class="text-right">
+
+          <span id="post-like-<%= post.id %>">
+            <%= render :partial => "like", :locals => { :post => post } %>
+          </span>
+
+          <span id="post-collection-<%= post.id %>">
+            <%= render :partial => "collection", :locals => { :post => post } %>
+          </span>
+
+    <% if current_user && post.user == current_user %>
+        <%= link_to "Delete", post_path(post), :class => "delete-post btn btn-danger" %>
+    <% end %>
+  </div>
+  </div>
+  <div class="panel-footer">
+    <% if current_user && current_user.is_admin? %>
+      <label>
+        <%= check_box_tag "mark_flag[#{post.id}]", 1, post.flag_at.present?,
+              :data => { :url => toggle_flag_post_path(post) }, :class => "toggle-flag" %> 标记为垃圾
+          <span id="post-flag-<%= post.id %>"><%= post.flag_at %></span>
+      </label>
+    <% end %>
+  </div>
+</div>

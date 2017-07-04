@@ -1,0 +1,11 @@
+<% if post.collectiond_users.any? %>
+  <%= post.collectiond_users.map{ |u| u.display_name }.join(",") %> 收藏了
+<% end %>
+
+<% if current_user # 登录才可以点赞 %>
+  <% if post.find_collection(current_user) %>
+    <%= link_to " ❤ ", uncollection_post_path(post), :method => :post, :remote => true, :class => "btn btn-primary" %>
+  <% else %>
+    <%= link_to " ❤️ ", collection_post_path(post), :method => :post, :remote => true, :class => "btn btn-primary" %>
+  <% end %>
+<% end %>
