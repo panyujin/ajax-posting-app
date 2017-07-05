@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       post "collection" => "posts#collection"
       post "uncollection" => "posts#uncollection"
       post "toggle_flag" => "posts#toggle_flag"
+      post "rate" => "posts#rate"
     end
   end
 
